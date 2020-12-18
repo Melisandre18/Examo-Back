@@ -24,7 +24,7 @@ public class Converter {
 
 	public static void main(String[] args) throws IOException {
 		boolean result;
-		File file = new File("mydata.txt");
+		File file = new File("MarkedUp.txt");
 		try {
 			result = file.createNewFile();
 			if (result) {
@@ -61,7 +61,8 @@ public class Converter {
 					if (strline.substring(strline.indexOf(" ") + 1) != null) {
 						k++;
 						writer.write("~~~" + "\n" + "test" + "\n" + k + "." + strline.substring(strline.indexOf(" "))
-								+ "\n");
+								+"\n");
+						
 						strline = br.readLine();
 						while (Character.isDigit(strline.charAt(0))) {
 							if (strline.substring(strline.indexOf(" ") + 1) != null) {
@@ -73,7 +74,7 @@ public class Converter {
 				}
 				if (!Character.isDigit(strline.charAt(0)) && strline.charAt(0) != 'I') {
 					correctAnswer = br2.readLine();
-					while (!Character.isDigit(strline.charAt(0)) && strline.charAt(0) != 'I') {
+					while(!Character.isDigit(strline.charAt(0)) && strline.charAt(0) != 'I') {
 						if (correctAnswer.substring(correctAnswer.indexOf(".") - 1, correctAnswer.indexOf("."))
 								.equals(strline.substring(0, strline.indexOf(" ")))) {
 							writer.write(strline + "@1.0" + "\n");
@@ -81,12 +82,23 @@ public class Converter {
 						} else {
 							writer.write(strline + "@0.0" + "\n");
 						}
+						
 						strline = br.readLine();
+						//case for the last question
+						if(strline==null) {
+						
+							break;
+						}
 					}
+					writer.write("???"+"\n"+correctAnswer.substring(correctAnswer.indexOf(" ")+1)+"\n");
+				
 				} else if (strline.charAt(0) == 'I') {
 					writer.write(strline + "\n");
 				}
+				
 				strline = br.readLine();
+				
+				
 			}
 			System.out.println("Your file is created and changed");
 		} catch (Exception e) {
